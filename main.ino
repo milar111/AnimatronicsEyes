@@ -2,51 +2,54 @@
 #include <Adafruit_PWMServoDriver.h>
 #include <Bluepad32.h>
 
-Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(); 
+Adafruit_PWMServoDriver pwm;
 
-#define SERVO_CH1    0   // D-Pad Left/Right
-#define SERVO_CH2    1   // D-Pad Up/Down
+// Eye limits and mid‐points
+const int xLeft  = 130;
+const int xRight =  70;
+const int xMid   =  95;
 
-#define SERVO_MIN    102
-#define SERVO_MAX    512
+const int yUp    =  70;
+const int yDown  = 110;
+const int yMid   = (yUp + yDown) / 2;  //  90
 
-float currentAngle1 = 90, targetAngle1 = 90;
-float currentAngle2 = 90, targetAngle2 = 90;
+// radius
+const int RADIUS = min( min(abs(xLeft - xMid), abs(xMid - xRight)), min(abs(yMid - yUp),   abs(yDown - yMid)) ); // =20
 
-// Скоростни параметри
-const int   maxSpeedDPS = 500;      
-const int   loopDelayMs = 20;       
-const float maxStep     = maxSpeedDPS * (loopDelayMs / 1000.0f);
+// Servo channels
+#define EYE_X     0
+#define EYE_Y     1
+#define LID_LEFT  2
+#define LID_RIGHT 3
 
-ControllerPtr myControllers[BP32_MAX_GAMEPADS];
+#define SERVO_MIN 102
+#define SERVO_MAX 512
+
+ControllerPtr controllers[BP32_MAX_GAMEPADS];
 
 void onConnectedController(ControllerPtr ctl) {
-  for (int i = 0; i < BP32_MAX_GAMEPADS; i++)
-    if (!myControllers[i]) { myControllers[i] = ctl; break; }
+  for (int i = 0; i < BP32_MAX_GAMEPADS; i++) {
+    if (!controllers[i]) {
+      controllers[i] = ctl;
+      Serial.print("Controller connected @ slot ");
+      Serial.println(i);
+      break;
+    }
+  }
 }
 
 void onDisconnectedController(ControllerPtr ctl) {
-  for (int i = 0; i < BP32_MAX_GAMEPADS; i++)
-    if (myControllers[i] == ctl) { myControllers[i] = nullptr; break; }
+  for (int i = 0; i < BP32_MAX_GAMEPADS; i++) {
+    if (controllers[i] == ctl) {
+      controllers[i] = nullptr;
+      Serial.print("Controller disconnected @ slot ");
+      Serial.println(i);
+      break;
+    }
+  }
 }
 
-void processGamepad(ControllerPtr ctl) {
-  uint8_t d = ctl->dpad();
-  // Left/Right -> SERVO_CH1
-  if (d & DPAD_LEFT)  targetAngle1 = max(0.0f, targetAngle1 - 5.0f);
-  if (d & DPAD_RIGHT) targetAngle1 = min(180.0f, targetAngle1 + 5.0f);
-  // Up/Down -> SERVO_CH2
-  if (d & DPAD_UP)    targetAngle2 = max(0.0f, targetAngle2 - 5.0f);
-  if (d & DPAD_DOWN)  targetAngle2 = min(180.0f, targetAngle2 + 5.0f);
-}
-
-void processControllers() {
-  for (auto ctl : myControllers)
-    if (ctl && ctl->isConnected() && ctl->hasData() && ctl->isGamepad())
-      processGamepad(ctl);
-}
-
-void setServoAngle(int ch, float angle) {
+void setServo(int ch, int angle) {
   angle = constrain(angle, 0, 180);
   uint16_t pulse = map(angle, 0, 180, SERVO_MIN, SERVO_MAX);
   pwm.setPWM(ch, 0, pulse);
@@ -54,34 +57,62 @@ void setServoAngle(int ch, float angle) {
 
 void setup() {
   Serial.begin(115200);
-  Wire.begin();               
+  Wire.begin();
   pwm.begin();
-  pwm.setPWMFreq(50);         
+  pwm.setPWMFreq(50);
+  delay(200);
 
-  setServoAngle(SERVO_CH1, currentAngle1);
-  setServoAngle(SERVO_CH2, currentAngle2);
+  setServo(EYE_X, xMid);
+  setServo(EYE_Y, yMid);
+  setServo(LID_LEFT,  50);
+  setServo(LID_RIGHT, 90);
 
   BP32.setup(&onConnectedController, &onDisconnectedController);
   BP32.forgetBluetoothKeys();
+
+  Serial.println("Ready. Left stick = eyes; R2 closes left lid; L2 closes right lid.");
 }
 
 void loop() {
-  if (BP32.update()) processControllers();
+  BP32.update();
 
-  float diff1 = targetAngle1 - currentAngle1;
-  if (fabs(diff1) > maxStep)
-    currentAngle1 += (diff1 > 0 ? 1 : -1) * maxStep;
-  else
-    currentAngle1 = targetAngle1;
+  for (auto ctl : controllers) {
+    if (!ctl || !ctl->isConnected()) continue;
 
-  float diff2 = targetAngle2 - currentAngle2;
-  if (fabs(diff2) > maxStep)
-    currentAngle2 += (diff2 > 0 ? 1 : -1) * maxStep;
-  else
-    currentAngle2 = targetAngle2;
+    float jx = ctl->axisX() / 512.0f;
+    float jy = ctl->axisY() / 512.0f;
+    const float DZ = 0.10f;
+    if (fabs(jx) < DZ) jx = 0;
+    if (fabs(jy) < DZ) jy = 0;
 
-  setServoAngle(SERVO_CH1, currentAngle1);
-  setServoAngle(SERVO_CH2, currentAngle2);
+    float mag = sqrt(jx*jx + jy*jy);
+    if (mag > 1.0f) { jx /= mag; jy /= mag; }
 
-  delay(loopDelayMs);
+    int angleX = xMid + round(jx * RADIUS);
+    int angleY = yMid - round(jy * RADIUS);  // invert Y
+
+    setServo(EYE_X, angleX);
+    setServo(EYE_Y, angleY);
+
+    //  eyelids 
+    // throttle() is R2, brake() is L2
+    if (ctl->throttle() > 0) {
+      // close 
+      setServo(LID_LEFT, 90);
+    } else {
+      // release 
+      setServo(LID_LEFT, 50);
+    }
+
+    if (ctl->brake() > 0) {
+      // close 
+      setServo(LID_RIGHT, 50);
+    } else {
+      // release
+      setServo(LID_RIGHT, 90);
+    }
+
+    break; 
+  }
+
 }
