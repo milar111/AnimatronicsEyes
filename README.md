@@ -25,6 +25,43 @@ This project creates lifelike animatronic eyes using servo motors for X/Y moveme
 * 1x power supply
 * Wires
 
+## 3D Printing Instructions
+
+### Print Settings
+* Layer Height: 0.2mm
+* Wall Loops: 2
+* Infill: Grid 15%
+* Support Type: Tree
+
+### Part Quantities
+Parts to print twice (2x):
+* Screws:
+  * [shortScrewUpperEyeLid.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/shortScrewUpperEyeLid.stl)
+  * [longScrewLowerEyeLid.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/longScrewLowerEyeLid.stl)
+  * [eyeLidScrew.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/eyeLidScrew.stl)
+  * [eye.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/eye.stl)
+  * [xAxisArm3.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/xAxisArm3.stl)
+
+Parts to print once (1x):
+* Base and Arms:
+  * [base.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/base.stl)
+  * [xAxisArm1.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/xAxisArm1.stl)
+  * [xAxisArm2.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/xAxisArm2.stl)
+  * [yAxisArm1.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/yAxisArm1.stl)
+  * [yAxisArm2.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/yAxisArm2.stl)
+  * [yAxisArm3.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/yAxisArm3.stl)
+* Eyelid Components:
+  * [upperEyeLidLeft.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/upperEyeLidLeft.stl)
+  * [lowerEyeLidLeft.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/lowerEyeLidLeft.stl)
+  * [upperEyeLidRight.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/upperEyeLidRight.stl)
+  * [lowerEyeLidRight.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/lowerEyeLidRight.stl)
+  * [upperArmLeft.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/upperArmLeft.stl)
+  * [lowerArmLeft.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/lowerArmLeft.stl)
+  * [upperArmRight.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/upperArmRight.stl)
+  * [lowerArmRight.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/lowerArmRight.stl)
+  * [eyeLidArmLeft.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/eyeLidArmLeft.stl)
+  * [eyeLidArmRight.stl](https://github.com/milar111/AnimatronicsEyes/raw/main/3dFiles/eyeLidArmRight.stl)
+
 ## Wiring Instructions
 
 Connect ESP32 to PCA9685 (left side pins):
