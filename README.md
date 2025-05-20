@@ -110,21 +110,33 @@ Channel 3: Right Eyelid
 
 1. **Servo Mounting**
    - Mount all servos to the base. Ensure that the yAxisArm1 is connected to the y-axis servo before assembling the left eyelid servo.
-   - [Image]
+     ![image](https://github.com/user-attachments/assets/1d93d944-19df-477b-8670-e6e30568bbea)
+     ![image](https://github.com/user-attachments/assets/1d799f9f-f95a-416d-8e36-4754763f77e3)
+
+
 
 2. **Arm Connections**
    - Connect all arms to their corresponding servos.
+     ![image](https://github.com/user-attachments/assets/d6fec72e-1700-4ae9-ac1c-390eb1d4d215)
    - Connect both eyes to the base, being careful not to break the flexible but fragile base pins.
+     ![image](https://github.com/user-attachments/assets/b826195e-a8ce-4c46-8b42-ee7ce7dedb1c)
    - Connect [xAxisArm3.stl](3dFiles/xAxisArm3.stl) to the eyes, then [xAxisArm2.stl](3dFiles/xAxisArm2.stl) to [xAxisArm3.stl](3dFiles/xAxisArm3.stl). After centering the servos, insert the protruding part of [xAxisArm2.stl](3dFiles/xAxisArm2.stl) into the hole in [xAxisArm1.stl](3dFiles/xAxisArm1.stl).
+     ![image](https://github.com/user-attachments/assets/273d0b4d-0dfd-4f0b-8072-3e227bf115e5)
+     ![image](https://github.com/user-attachments/assets/a9b26eb4-4221-4303-b7a5-53b1ead345e7)
+     ![image](https://github.com/user-attachments/assets/e998718d-3480-4deb-b451-8e8c84682ace)
    - Connect [yAxisArm3.stl](3dFiles/yAxisArm3.stl) to [yAxisArm2.stl](3dFiles/yAxisArm2.stl), then [yAxisArm2.stl](3dFiles/yAxisArm2.stl) to [xAxisArm1.stl](3dFiles/xAxisArm1.stl) (which should already be connected to the servo). Be cautious as these parts are flexible but can break under tension.
-   - [Image]
+   ![image](https://github.com/user-attachments/assets/9ce8e224-6201-4925-9436-2e68799ed5d8)
+   ![image](https://github.com/user-attachments/assets/65009812-b63b-4e7b-b352-546f0df2ccdd)
 
 3. **Eyelid Assembly**
    - Connect the eyelids to both the left and right eyes. The supporting part is designed to be flexible but can bend or break under excessive tension.
    - Attach the upper and lower arms to the eyelids using the corresponding screws (long screw for the lower eyelid arm, short screw for the upper eyelid arm). First attach the upper arm, then the lower arm.
    - For easier assembly, first attach the arms to the eyelids, then connect them to the base.
    - Connect the [eyeLidArmLeft.stl](3dFiles/eyeLidArmLeft.stl) and [eyeLidArmRight.stl](3dFiles/eyeLidArmRight.stl) to the eyelidarms using the [eyeLidScrew.stl](3dFiles/eyeLidScrew.stl).
-   - [Image]
+     ![image](https://github.com/user-attachments/assets/464294e3-3717-42d6-bb62-d61231fca179)
+     ![image](https://github.com/user-attachments/assets/2499c693-6b68-42b3-9093-82630428090e)
+     ![image](https://github.com/user-attachments/assets/4e54b646-fc87-4b90-badf-236bcdb18f53)
+
 
 4. **Eyelid Servo Calibration**
    - **Important Note:** The arm/horn mounted on the eyelid servo should not be perpendicular to the servo itself.
@@ -132,12 +144,13 @@ Channel 3: Right Eyelid
      - Ensure all servos are calibrated to 90 degrees using `servo_calibration.ino`.
      - Close both eyelids.
      - Mount the arm on the servo (eyelidarmleft/right) and slide it until the eyelids are closed. This should not move the motor; if it does, recalibrate the servo.
-     - Repeat the process for the left eye.
-   - [Image]
+     - Repeat the process for the other eye.
 
 5. **Final Adjustments**
    - The assembly is designed for a tight, snap-fit connection. Only the x and y axis arms require screws for the horns.
    - Ensure all connections are secure and the mechanism moves smoothly without additional parts.
+     ![image](https://github.com/user-attachments/assets/1b2ee45e-a18f-4694-9390-3224901ffbba)
+     ![image](https://github.com/user-attachments/assets/34ea9faa-6ab1-4927-8eac-fc00e98bc3f8)
 
 ## Troubleshooting
 
