@@ -106,6 +106,39 @@ Channel 3: Right Eyelid
      - L2/R2 triggers: Left/right eyelid control
      - Triangle button: "Sus mode" animation
 
+## Assembly Instructions
+
+1. **Servo Mounting**
+   - Mount all servos to the base. Ensure that the yAxisArm1 is connected to the y-axis servo before assembling the left eyelid servo.
+   - [Image]
+
+2. **Arm Connections**
+   - Connect all arms to their corresponding servos.
+   - Connect both eyes to the base, being careful not to break the flexible but fragile base pins.
+   - Connect [xAxisArm3.stl](3dFiles/xAxisArm3.stl) to the eyes, then [xAxisArm2.stl](3dFiles/xAxisArm2.stl) to [xAxisArm3.stl](3dFiles/xAxisArm3.stl). After centering the servos, insert the protruding part of [xAxisArm2.stl](3dFiles/xAxisArm2.stl) into the hole in [xAxisArm1.stl](3dFiles/xAxisArm1.stl).
+   - Connect [yAxisArm3.stl](3dFiles/yAxisArm3.stl) to [yAxisArm2.stl](3dFiles/yAxisArm2.stl), then [yAxisArm2.stl](3dFiles/yAxisArm2.stl) to [xAxisArm1.stl](3dFiles/xAxisArm1.stl) (which should already be connected to the servo). Be cautious as these parts are flexible but can break under tension.
+   - [Image]
+
+3. **Eyelid Assembly**
+   - Connect the eyelids to both the left and right eyes. The supporting part is designed to be flexible but can bend or break under excessive tension.
+   - Attach the upper and lower arms to the eyelids using the corresponding screws (long screw for the lower eyelid arm, short screw for the upper eyelid arm). First attach the upper arm, then the lower arm.
+   - For easier assembly, first attach the arms to the eyelids, then connect them to the base.
+   - Connect the [eyeLidArmLeft.stl](3dFiles/eyeLidArmLeft.stl) and [eyeLidArmRight.stl](3dFiles/eyeLidArmRight.stl) to the eyelidarms using the [eyeLidScrew.stl](3dFiles/eyeLidScrew.stl).
+   - [Image]
+
+4. **Eyelid Servo Calibration**
+   - **Important Note:** The arm/horn mounted on the eyelid servo should not be perpendicular to the servo itself.
+   - **Calibration Steps:**
+     - Ensure all servos are calibrated to 90 degrees using `servo_calibration.ino`.
+     - Close both eyelids.
+     - Mount the arm on the servo (eyelidarmleft/right) and slide it until the eyelids are closed. This should not move the motor; if it does, recalibrate the servo.
+     - Repeat the process for the left eye.
+   - [Image]
+
+5. **Final Adjustments**
+   - The assembly is designed for a tight, snap-fit connection. Only the x and y axis arms require screws for the horns.
+   - Ensure all connections are secure and the mechanism moves smoothly without additional parts.
+
 ## Troubleshooting
 
 ### Servo Issues

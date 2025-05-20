@@ -13,7 +13,7 @@ const int yUp    =  70;
 const int yDown  = 110;
 const int yMid   = (yUp + yDown) / 2;  // 90
 
-// Sweep radius
+// radius
 const int RADIUS = min(
   min(abs(xLeft - xMid), abs(xMid - xRight)),
   min(abs(yMid - yUp),    abs(yDown - yMid))
