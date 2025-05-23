@@ -88,6 +88,10 @@ Channel 2: Left Eyelid
 Channel 3: Right Eyelid
 ```
 
+## Wiring Diagram
+![image](https://github.com/user-attachments/assets/70888782-25e4-4e48-918a-455280189ec8)
+
+
 ## Software Requirements
 
 * Arduino IDE
